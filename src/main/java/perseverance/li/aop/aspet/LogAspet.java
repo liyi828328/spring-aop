@@ -74,7 +74,7 @@ public class LogAspet {
     }
 
     @Around("pointcut()")
-    public Object around(ProceedingJoinPoint pjp) {
+    public Object around(ProceedingJoinPoint pjp) throws Throwable {
         Signature signature = pjp.getSignature();
         Object[] args = pjp.getArgs();
         Object result = null;
@@ -83,8 +83,8 @@ public class LogAspet {
             result = pjp.proceed(args);
             logger.info("@Around " + signature.getDeclaringTypeName() + " - " + signature.getName() + " around ...... end >> result : " + result);
         } catch (Throwable throwable) {
-//            throwable.printStackTrace();
             logger.info("@Around " + signature.getDeclaringTypeName() + " - " + signature.getName() + " around exception > " + throwable.getMessage());
+            throw throwable;
         } finally {
             logger.info("@Around " + signature.getDeclaringTypeName() + " - " + signature.getName() + " around ...... > finally");
         }
