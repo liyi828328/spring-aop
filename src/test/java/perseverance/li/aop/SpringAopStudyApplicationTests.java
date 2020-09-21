@@ -29,6 +29,11 @@ class SpringAopStudyApplicationTests {
 
         int result1 = calculator.div(10, 7);
         logger.info("div result : " + result1);
+
+        logger.info("-----------");
+
+        int result2 = calculator.div(10, 0);
+        logger.info("div result : " + result2);
     }
 
 }

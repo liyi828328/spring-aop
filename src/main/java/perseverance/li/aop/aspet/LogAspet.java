@@ -1,9 +1,13 @@
 package perseverance.li.aop.aspet;
 
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 /**
  * ---------------------------------------------------------------
@@ -42,23 +46,28 @@ public class LogAspet {
 
     }
 
-    @Before("pointcut()")
-    public void start() {
-        logger.info("方法开始...");
+    @Before(value = "pointcut()")
+    public void start(JoinPoint joinPoint) {
+        Signature signature = joinPoint.getSignature();
+        Object[] args = joinPoint.getArgs();
+        logger.info(signature.getDeclaringTypeName() + " - " + signature.getName() + " 方法开始,参数是 >> "
+                + Arrays.asList(args).toString());
     }
 
-    @AfterReturning("pointcut()")
-    public void stop() {
-        logger.info("方法结束，return结果...");
+    @AfterReturning(value = "pointcut()", returning = "result")
+    public void stop(JoinPoint joinPoint, Object result) {
+        Signature signature = joinPoint.getSignature();
+        logger.info(signature.getDeclaringTypeName() + " - " + signature.getName() + " 方法结束,return结果 >> " + result);
     }
 
-    @AfterThrowing("pointcut()")
-    public void exception() {
-        logger.info("方法异常..");
+    @AfterThrowing(value = "pointcut()", throwing = "e")
+    public void exception(JoinPoint joinPoint, Exception e) {
+        Signature signature = joinPoint.getSignature();
+        logger.info(signature.getDeclaringTypeName() + " - " + signature.getName() + "方法异常,exception >> " + e.getMessage());
     }
 
     @After("pointcut()")
-    public void finallyM() {
+    public void finallyM(JoinPoint joinPoint) {
         logger.info("方法全部结束...");
     }
 
