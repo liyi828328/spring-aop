@@ -15,11 +15,11 @@ package perseverance.li.aop.service;
  */
 public interface ICalculator {
 
-    int add(int a, int b);
+    Integer add(Integer a, Integer b);
 
-    int sub(int a, int b);
+    Integer sub(Integer a, Integer b);
 
-    int mul(int a, int b);
+    Integer mul(Integer a, Integer b);
 
-    int div(int a, int b);
+    Integer div(Integer a, Integer b);
 }

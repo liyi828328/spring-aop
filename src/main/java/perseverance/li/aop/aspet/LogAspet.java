@@ -1,6 +1,7 @@
 package perseverance.li.aop.aspet;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -50,25 +51,44 @@ public class LogAspet {
     public void start(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         Object[] args = joinPoint.getArgs();
-        logger.info(signature.getDeclaringTypeName() + " - " + signature.getName() + " 方法开始,参数是 >> "
+        logger.info("@Before " + signature.getDeclaringTypeName() + " - " + signature.getName() + " 方法开始,参数是 >> "
                 + Arrays.asList(args).toString());
     }
 
     @AfterReturning(value = "pointcut()", returning = "result")
     public void stop(JoinPoint joinPoint, Object result) {
         Signature signature = joinPoint.getSignature();
-        logger.info(signature.getDeclaringTypeName() + " - " + signature.getName() + " 方法结束,return结果 >> " + result);
+        logger.info("@AfterReturning " + signature.getDeclaringTypeName() + " - " + signature.getName() + " 方法结束,return结果 >> " + result);
     }
 
     @AfterThrowing(value = "pointcut()", throwing = "e")
     public void exception(JoinPoint joinPoint, Exception e) {
         Signature signature = joinPoint.getSignature();
-        logger.info(signature.getDeclaringTypeName() + " - " + signature.getName() + "方法异常,exception >> " + e.getMessage());
+        logger.info("@exception " + signature.getDeclaringTypeName() + " - " + signature.getName() + "方法异常,exception >> " + e.getMessage());
     }
 
     @After("pointcut()")
     public void finallyM(JoinPoint joinPoint) {
-        logger.info("方法全部结束...");
+        Signature signature = joinPoint.getSignature();
+        logger.info("@After " + signature.getDeclaringTypeName() + " - " + signature.getName() + " 方法全部结束...");
+    }
+
+    @Around("pointcut()")
+    public Object around(ProceedingJoinPoint pjp) {
+        Signature signature = pjp.getSignature();
+        Object[] args = pjp.getArgs();
+        Object result = null;
+        try {
+            logger.info("@Around " + signature.getDeclaringTypeName() + " - " + signature.getName() + " around ...... start");
+            result = pjp.proceed(args);
+            logger.info("@Around " + signature.getDeclaringTypeName() + " - " + signature.getName() + " around ...... end >> result : " + result);
+        } catch (Throwable throwable) {
+//            throwable.printStackTrace();
+            logger.info("@Around " + signature.getDeclaringTypeName() + " - " + signature.getName() + " around exception > " + throwable.getMessage());
+        } finally {
+            logger.info("@Around " + signature.getDeclaringTypeName() + " - " + signature.getName() + " around ...... > finally");
+        }
+        return result;
     }
 
 }

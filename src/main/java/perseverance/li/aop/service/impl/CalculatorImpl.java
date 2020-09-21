@@ -20,26 +20,26 @@ import perseverance.li.aop.service.ICalculator;
 public class CalculatorImpl implements ICalculator {
 
     @Override
-    public int add(int a, int b) {
-        int result = a + b;
+    public Integer add(Integer a, Integer b) {
+        Integer result = a + b;
         return result;
     }
 
     @Override
-    public int sub(int a, int b) {
-        int result = a - b;
+    public Integer sub(Integer a, Integer b) {
+        Integer result = a - b;
         return result;
     }
 
     @Override
-    public int mul(int a, int b) {
-        int result = a * b;
+    public Integer mul(Integer a, Integer b) {
+        Integer result = a * b;
         return result;
     }
 
     @Override
-    public int div(int a, int b) {
-        int result = a / b;
+    public Integer div(Integer a, Integer b) {
+        Integer result = a / b;
         return result;
     }
 }

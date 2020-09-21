@@ -22,17 +22,17 @@ class SpringAopStudyApplicationTests {
         //proxy-target-class 设置为true后，使用cglib做动态代理
         logger.info("calculator : " + calculator.getClass());
 
-        int result = calculator.add(1, 1);
-        logger.info("add result : " + result);
+        Integer result = calculator.add(1, 1);
+        logger.info("test add result : " + result);
 
+//        logger.info("-----------");
+//
+//        int result1 = calculator.div(10, 7);
+//        logger.info("div result : " + result1);
+//
         logger.info("-----------");
-
-        int result1 = calculator.div(10, 7);
-        logger.info("div result : " + result1);
-
-        logger.info("-----------");
-
-        int result2 = calculator.div(10, 0);
+//
+        Integer result2 = calculator.div(10, 0);
         logger.info("div result : " + result2);
     }
 
