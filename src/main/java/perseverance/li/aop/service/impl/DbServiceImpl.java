@@ -52,6 +52,13 @@ public class DbServiceImpl implements IDbservice {
      *      以非事务方式执行，如果当前存在事务，则抛出异常。
      *  NESTED
      *      如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作。
+     *
+     * ***********************************
+     *
+     * 如果在自己的service调用会发现事务的效果就没有了，原因是外层调用的时候使用的AOP，但是本类方法自己的调用就是最最普通的调用，就是同一个事务。
+     *
+     * ***********************************
+     *
      * <p>
      * isolation 隔离级别
      *  READ_UNCOMMITTED
