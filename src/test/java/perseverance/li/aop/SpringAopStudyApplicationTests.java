@@ -5,7 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import perseverance.li.aop.service.ICalculator;
+import perseverance.li.aop.service.IDbservice;
+import perseverance.li.aop.service.ITestService;
 
 @SpringBootTest
 class SpringAopStudyApplicationTests {
@@ -14,6 +17,10 @@ class SpringAopStudyApplicationTests {
 
     @Autowired
     private ICalculator calculator;
+    @Autowired
+    private IDbservice dbservice;
+    @Autowired
+    private ITestService testService;
 
     @Test
     void contextLoads() {
@@ -34,6 +41,17 @@ class SpringAopStudyApplicationTests {
 //
         Integer result2 = calculator.div(10, 0);
         logger.info("div result : " + result2);
+    }
+
+    @Test
+    void test01() {
+        int line = dbservice.insertDataToDb();
+        logger.info("insert line : " + line);
+    }
+
+    @Test
+    void test02() {
+        testService.test();
     }
 
 }
